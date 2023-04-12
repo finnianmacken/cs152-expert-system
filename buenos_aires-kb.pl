@@ -1,13 +1,75 @@
 % Used for predicates that are added later
 :- dynamic known/3, multivalued/1.
 
+
+% Distances
+distance(museo_evita, 4).
+distance(science_museum, 4).
+distance(fine_arts, 10).
+distance(borges_center, 10).
+distance(silvori_museum, 4).
+distance(malba, 4).
+distance(museo_modern, 10).
+
+distance(library, 4).
+distance(recoletta_cemetery, 4).
+distance(basilica, 10).
+distance(jazz_backroom, 4).
+distance(tango, 4).
+distance(teatro_colon, 10).
+
+distance(botanical_gardens, 4).
+distance(football_centro_garrigos, 4).
+distance(ecological_reserve, 10).
+distance(centenario_park, 4).
+distance(rock_climb, 4).
+distance(peru_beach, 10).
+
+distance(vege_buffet, 4).
+distance(toque_perfecto, 10).
+distance(cang_tin, 4).
+distance(saigon_noodle, 10).
+distance(chui, 4).
+distance(tandoor, 10).
+distance(chori, 4).
+distance(sazon_cuyagua, 10).
+distance(koi_dumplings, 4).
+distance(concina_yovita, 10).
+distance(don_julio, 4).
+distance(sagardi_argentina, 10).
+
+
+% Time Required
+time_required(museo_evita, 1).
+time_required(science_museum, 3).
+time_required(fine_arts, 4).
+time_required(borges_center, 4).
+time_required(silvori_museum, 1).
+time_required(malba, 4).
+time_required(museo_modern, 4).
+
+time_required(library, 1).
+time_required(recoletta_cemetery, 4).
+time_required(basilica, 4).
+time_required(jazz_backroom, 1).
+time_required(tango, 4).
+time_required(teatro_colon, 4).
+
+time_required(botanical_gardens, 1).
+time_required(football_centro_garrigos, 4).
+time_required(ecological_reserve, 4).
+time_required(centenario_park, 1).
+time_required(rock_climb, 4).
+time_required(peru_beach, 4).
+
+
 % 
 distance_appropriate(Location) :- distance(Location, Distance), between(0, 5, Distance), distance(close).
 distance_appropriate(Location) :- distance(Location, Distance), between(5, 100, Distance), distance(far).
 
 % 
-time_appropriate(Location) :- time_constraints(Location, Time_Constraints), between(1, 2, Time_Constraints), time_constraints(short).
-time_appropriate(Location) :- time_constraints(Location, Time_Constraints), between(3, 100, Time_Constraints), time_constraints(long).
+time_appropriate(Location) :- time_required(Location, Time_Required), between(1, 2, Time_Required), time_required(short).
+time_appropriate(Location) :- time_required(Location, Time_Required), between(3, 100, Time_Required), time_required(long).
 
 
 % RULES 
@@ -88,7 +150,7 @@ recommended(sagardi_argentina) :- experience(culinary), distance_appropriate(sag
 
 experience(Value) :- menuask(experience, Value, [cultural, physical_activity, culinary]).
 
-time_constraints(Value) :- menuask(time_constraints, Value, [short, long]).
+time_required(Value) :- menuask(time_required, Value, [short, long]).
 
 distance(Value) :- menuask(distance, Value, [close, far]).
 
