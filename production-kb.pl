@@ -17,6 +17,9 @@ distance_appropriate(Location) :- distance(Location, Distance), between(10, 100,
 
 % Rules
 
+% recommended should be last so that we ask general questions first
+final_recommendation(X) :- distance_appropriate(X), recommended(X).
+
 % Rule 1:
 
 recommended(monument):- experience(historical).
@@ -38,7 +41,6 @@ recommended(art_gallery) :- experience(cultural).
 recommended(cafe) :- experience(culinary).
 
 
-final_recommendation(X) :- recommended(X), distance_appropriate(X).
 
 % Askables
 
