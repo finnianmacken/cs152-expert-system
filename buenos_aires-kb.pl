@@ -1,19 +1,34 @@
 % Used for predicates that are added later
 :- dynamic known/3, multivalued/1.
 
-% DISTANCES
-distance(museo_evita, 4).
 
-% TIME CONSTRAINTS
-time_constraints(museo_evita, 2)
+% Time Required
+time_required(museo_evita, 2).
+time_required(science_museum, 3).
+time_required(fine_arts, 5).
+time_required(borges_center, 4).
+time_required(silvori_museum, 1).
+time_required(malba, 4).
+time_required(museo_modern, 4).
+
+time_required(library, 1).
+time_required(recoletta_cemetery, 4).
+time_required(basilica, 3).
+time_required(jazz_backroom, 2).
+time_required(tango, 3).
+time_required(teatro_colon, 3).
+
+time_required(botanical_gardens, 2).
+time_required(football_centro_garrigos, 4).
+time_required(ecological_reserve, 4).
+time_required(centenario_park, 2).
+time_required(rock_climb, 3).
+time_required(peru_beach, 6).
+
 
 % 
-distance_appropriate(Location) :- distance(Location, Distance), between(0, 5, Distance), distance(close).
-distance_appropriate(Location) :- distance(Location, Distance), between(5, 100, Distance), distance(far).
-
-% 
-time_appropriate(Location) :- time_constraints(Location, Time_Constraints), between(1, 2, Time_Constraints), time_constraints(short).
-time_appropriate(Location) :- time_constraints(Location, Time_Constraints), between(3, 100, Time_Constraints), time_constraints(long).
+time_appropriate(Location) :- time_required(Location, Time_Required), between(1, 2, Time_Required), time_required(short).
+time_appropriate(Location) :- time_required(Location, Time_Required), between(3, 100, Time_Required), time_required(long).
 
 
 % RULES 
@@ -21,72 +36,75 @@ time_appropriate(Location) :- time_constraints(Location, Time_Constraints), betw
 %% Museums %%
 recommended(museo_evita):- experience(cultural), time_appropriate(museo_evita), budget(free), culture_type(museum).
 
-recommended(science_museum):- experience(cultural), time_appropriate(science_museum), distance_appropriate(science_museum), budget(free), culture_type(museum).
+recommended(science_museum):- experience(cultural), time_appropriate(science_museum), distance(close), budget(free), culture_type(museum).
 
-recommended(fine_arts):- experience(cultural), time_appropriate(fine_arts), distance_appropriate(fine_arts), budget(free), culture_type(museum), museum_type(art).
-recommended(borges_center):- experience(cultural), time_appropriate(borges_center), distance_appropriate(borges_center), budget(free), culture_type(museum), museum_type(culture).
+recommended(fine_arts):- experience(cultural), time_appropriate(fine_arts), distance(far), budget(free), culture_type(museum), museum_type(art).
+recommended(borges_center):- experience(cultural), time_appropriate(borges_center), distance(far), budget(free), culture_type(museum), museum_type(culture).
 
 recommended(silvori_museum):- experience(cultural), time_appropriate(silvori_museum),  budget(silvori_museum), culture_type(museum).
 
-recommended(malba):- experience(cultural), time_appropriate(malba), distance_appropriate(malba), \+ budget(free), culture_type(museum).
+recommended(malba):- experience(cultural), time_appropriate(malba), distance(close), \+ budget(free), culture_type(museum).
 
-recommended(museo_modern):- experience(cultural), time_appropriate(museo_modern), distance_appropriate(museo_modern), \+ budget(free), culture_type(museum).
+recommended(museo_modern):- experience(cultural), time_appropriate(museo_modern), distance(far), \+ budget(free), culture_type(museum).
 
 
 %% Not Museums %%
 recommended(library):- experience(cultural), time_appropriate(library), budget(free), \+ culture_type(museum).
 
-recommended(recoletta_cemetery):- experience(cultural), time_appropriate(recoletta_cemetery), distance_appropriate(recoletta_cemetery), budget(free), \+ culture_type(museum).
+recommended(recoletta_cemetery):- experience(cultural), time_appropriate(recoletta_cemetery), distance(close), budget(free), \+ culture_type(museum).
 
-recommended(basilica):- experience(cultural), time_appropriate(basilica), distance_appropriate(basilica), budget(free), \+ culture_type(museum).
+recommended(basilica):- experience(cultural), time_appropriate(basilica), distance(far), budget(free), \+ culture_type(museum).
 
 recommended(jazz_backroom):- experience(cultural), time_appropriate(jazz_backroom), \+ budget(free), \+ culture_type(museum).
 
-recommended(tango):- experience(cultural), time_appropriate(tango), distance_appropriate(tango), \+ budget(free), \+ culture_type(museum).
+recommended(tango):- experience(cultural), time_appropriate(tango), distance(close), \+ budget(free), \+ culture_type(museum).
 
-recommended(teatro_colon):- experience(cultural), time_appropriate(teatro_colon), distance_appropriate(teatro_colon), \+ budget(free), \+ culture_type(museum).
+recommended(teatro_colon):- experience(cultural), time_appropriate(teatro_colon), distance(far), \+ budget(free), \+ culture_type(museum).
 
 
 %% Physical Activities %%
 recommended(botanical_gardens):- experience(physical_activity), time_appropriate(botanical_gardens), budget(free).
 
-recommended(football_centro_garrigos):- experience(physical_activity), time_appropriate(football_centro_garrigos), distance_appropriate(football_centro_garrigos), budget(free).
+recommended(football_centro_garrigos):- experience(physical_activity), time_appropriate(football_centro_garrigos), distance(close), budget(free).
 
-recommended(ecological_reserve):- experience(physical_activity), time_appropriate(ecological_reserve), distance_appropriate(ecological_reserve), budget(free).
+recommended(ecological_reserve):- experience(physical_activity), time_appropriate(ecological_reserve), distance(far), budget(free).
 
 recommended(centenario_park):- experience(physical_activity), time_appropriate(centenario_park), \+ budget(free).
 
-recommended(rock_climb):- experience(physical_activity), time_appropriate(rock_climb), distance_appropriate(rock_climb), \+ budget(free).
+recommended(rock_climb):- experience(physical_activity), time_appropriate(rock_climb), distance(close), \+ budget(free).
 
-recommended(peru_beach):- experience(physical_activity), time_appropriate(peru_beach), distance_appropriate(peru_beach), \+ budget(free).
+recommended(peru_beach):- experience(physical_activity), time_appropriate(peru_beach), distance(far), \+ budget(free).
 
 
 %% Culinary: Vegetarian %%
-recommended(vege_buffet) :- experience(culinary), distance_appropriate(vege_buffet), price_point(low), diet(vegetarian). 
+recommended(veganious) :- experience(culinary), distance(close), price_point(low), diet(vegetarian). 
 
-recommended(toque_perfecto) :- experience(culinary), distance_appropriate(toque_perfecto), price_point(low), diet(vegetarian). 
+recommended(toque_perfecto) :- experience(culinary), distance(far), price_point(low), diet(vegetarian). 
 
-recommended(cang_tin) :- experience(culinary), distance_appropriate(cang_tin), price_point(medium), diet(vegetarian). 
+recommended(cang_tin) :- experience(culinary), distance(close), price_point(medium), diet(vegetarian). 
 
-recommended(saigon_noodle) :- experience(culinary), distance_appropriate(saigon_noodle), price_point(medium), diet(vegetarian). 
+recommended(saigon_noodle) :- experience(culinary), distance(far), price_point(medium), diet(vegetarian). 
 
-recommended(chui) :- experience(culinary), distance_appropriate(chui), price_point(high), diet(vegetarian). 
+recommended(chui) :- experience(culinary), distance(close), price_point(high), diet(vegetarian). 
+recommended(mudra) :- experience(culinary), distance(close), price_point(high), diet(vegetarian). 
 
-recommended(tandoor) :- experience(culinary), distance_appropriate(tandoor), price_point(high), diet(vegetarian). 
+recommended(tandoor) :- experience(culinary), distance(far), price_point(high), diet(vegetarian). 
 
 
 %% Culinary: Meat Eaters %%
-recommended(chori) :- experience(culinary), distance_appropriate(chori), price_point(low), \+ diet(vegetarian). 
+recommended(chori) :- experience(culinary), distance(close), price_point(low), \+ diet(vegetarian). 
 
-recommended(sazon_cuyagua) :- experience(culinary), distance_appropriate(sazon_cuyagua), price_point(low), \+ diet(vegetarian). 
+recommended(sazon_cuyagua) :- experience(culinary), distance(far), price_point(low), \+ diet(vegetarian). 
 
-recommended(koi_dumplings) :- experience(culinary), distance_appropriate(koi_dumplings), price_point(medium), \+ diet(vegetarian). 
+recommended(koi_dumplings) :- experience(culinary), distance(close), price_point(medium), \+ diet(vegetarian). 
+recommended(kefi_greek) :- experience(culinary), distance(close), price_point(medium), \+ diet(vegetarian). 
 
-recommended(concina_yovita) :- experience(culinary), distance_appropriate(concina_yovita), price_point(medium), \+ diet(vegetarian). 
+recommended(concina_yovita) :- experience(culinary), distance(far), price_point(medium), \+ diet(vegetarian). 
+recommended(mr_ho_korean) :- experience(culinary), distance(far), price_point(medium), \+ diet(vegetarian). 
 
-recommended(don_julio) :- experience(culinary), distance_appropriate(don_julio), price_point(high), \+ diet(vegetarian). 
+recommended(don_julio) :- experience(culinary), distance(close), price_point(high), \+ diet(vegetarian). 
 
-recommended(sagardi_argentina) :- experience(culinary), distance_appropriate(sagardi_argentina), price_point(high), \+ diet(vegetarian). 
+recommended(sagardi_argentina) :- experience(culinary), distance(far), price_point(high), \+ diet(vegetarian). 
 
 
 
@@ -94,7 +112,7 @@ recommended(sagardi_argentina) :- experience(culinary), distance_appropriate(sag
 
 experience(Value) :- menuask(experience, Value, [cultural, physical_activity, culinary]).
 
-time_constraints(Value) :- menuask(time_constraints, Value, [short, long]).
+time_required(Value) :- menuask(time_required, Value, [short, long]).
 
 distance(Value) :- menuask(distance, Value, [close, far]).
 
