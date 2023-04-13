@@ -41,12 +41,11 @@ recommended(science_museum):- experience(cultural), time_appropriate(science_mus
 recommended(fine_arts):- experience(cultural), time_appropriate(fine_arts), distance(far), budget(free), culture_type(museum), museum_type(art).
 recommended(borges_center):- experience(cultural), time_appropriate(borges_center), distance(far), budget(free), culture_type(museum), museum_type(culture).
 
-recommended(silvori_museum):- experience(cultural), time_appropriate(silvori_museum),  budget(silvori_museum), culture_type(museum).
+recommended(silvori_museum):- experience(cultural), time_appropriate(silvori_museum),  \+ budget(free), culture_type(museum).
 
 recommended(malba):- experience(cultural), time_appropriate(malba), distance(close), \+ budget(free), culture_type(museum).
 
 recommended(museo_modern):- experience(cultural), time_appropriate(museo_modern), distance(far), \+ budget(free), culture_type(museum).
-
 
 %% Not Museums %%
 recommended(library):- experience(cultural), time_appropriate(library), budget(free), \+ culture_type(museum).
@@ -105,7 +104,6 @@ recommended(mr_ho_korean) :- experience(culinary), distance(far), price_point(me
 recommended(don_julio) :- experience(culinary), distance(close), price_point(high), \+ diet(vegetarian). 
 
 recommended(sagardi_argentina) :- experience(culinary), distance(far), price_point(high), \+ diet(vegetarian). 
-
 
 
 % Askables
