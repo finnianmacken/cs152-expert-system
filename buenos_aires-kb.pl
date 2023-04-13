@@ -1,6 +1,12 @@
 % Used for predicates that are added later
 :- dynamic known/3, multivalued/1.
 
+% DISTANCES
+distance(museo_evita, 4).
+
+% TIME CONSTRAINTS
+time_constraints(museo_evita, 2)
+
 % 
 distance_appropriate(Location) :- distance(Location, Distance), between(0, 5, Distance), distance(close).
 distance_appropriate(Location) :- distance(Location, Distance), between(5, 100, Distance), distance(far).
