@@ -145,11 +145,9 @@ V \== V2,
 !, fail.
 
 ask(A, V):-
-write("Hello"),
 read_py(A,V,Y), % get the answer
 atom_string(Z, Y),
 assertz(known(Z, A, V)), % remember it
-write(Z == yes),
 Z == yes.	% succeed or fail
 
 %% MENU ASK
