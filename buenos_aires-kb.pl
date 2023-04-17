@@ -1,6 +1,6 @@
 % Used for predicates that are added later
 :- dynamic known/3, multivalued/1.
-
+:- discontiguous menuask/3.
 
 % Time Required
 time_required(museo_evita, 2).
@@ -21,7 +21,7 @@ time_required(teatro_colon, 3).
 time_required(botanical_gardens, 2).
 time_required(football_centro_garrigos, 4).
 time_required(ecological_reserve, 4).
-time_required(centenario_park, 2).
+time_required(centenario_park, 1).
 time_required(rock_climb, 3).
 time_required(peru_beach, 6).
 
@@ -54,7 +54,7 @@ recommended(recoletta_cemetery):- experience(cultural), time_appropriate(recolet
 
 recommended(basilica):- experience(cultural), time_appropriate(basilica), distance(far), budget(free), \+culture_type(museum).
 
-recommended(jazz_backroom):- experience(cultural), time_appropriate(jazz_backroom), \+culture_type(museum), budget(free).
+recommended(jazz_backroom):- experience(cultural), time_appropriate(jazz_backroom), \+budget(free), \+culture_type(museum).
 
 recommended(tango) :- experience(cultural), time_appropriate(tango), distance(close), \+budget(free), \+culture_type(museum).
 
@@ -150,6 +150,8 @@ atom_string(Z, Y),
 assertz(known(Z, A, V)), % remember it
 Z == yes.	% succeed or fail
 
+
+
 %% MENU ASK
 menuask(A, V, Menu):-
 known(yes, A, V), % succeed if true
@@ -167,7 +169,7 @@ V \== V2,
 !, fail.
 
 menuask(A, V, Menu):-
-read_menu_py(A, V, X, Menu), % get the answer
+read_menu_py(A, X, Menu), % get the answer
 atom_string(Z, X),
 check_val(Z, A, V, Menu),
 asserta(known(yes, A, Z)),
@@ -177,13 +179,5 @@ check_val(Z, A, V, Menu) :-
 member(Z, Menu), !.
 
 check_val(Z, A, V, Menu) :-
-ask_menu_again_py(Z, A, V),
+ask_menu_again_py(Z),
 menuask(A, V, Menu).
-
-
-
-
-
-
-
-

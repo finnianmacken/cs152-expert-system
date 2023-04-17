@@ -1,6 +1,6 @@
 
 % Used for predicates that are added later
-:- dynamic known/3, multivalued/1.
+:- dynamic known/3, multivalued/1, ready_menu_py/3.
 
 
 % Distances
@@ -91,7 +91,7 @@ V \== V2,
 !, fail.
 
 menuask(A, V, Menu):-
-read_menu_py(A, V, X, Menu), % get the answer
+read_menu_py(A, X, Menu), % get the answer
 write(X),
 atom_string(Z, X),
 check_val(Z, A, V, Menu),
@@ -102,5 +102,5 @@ check_val(Z, A, V, Menu) :-
 member(Z, Menu), !.
 
 check_val(Z, A, V, Menu) :-
-ask_menu_again_py(Z, A, V),
+ask_menu_again_py(Z),
 menuask(A, V, Menu).
